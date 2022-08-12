@@ -16,7 +16,7 @@
         "bradlc.vscode-tailwindcss",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "vue.volar",
+        "octref.vetur",
         "zixuanchen.vitest-explorer"
       ],
       "settings": {
