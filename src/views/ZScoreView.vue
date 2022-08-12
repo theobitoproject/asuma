@@ -3,17 +3,25 @@
     <KidForm v-model="kid" @submit="getZScore">
       <template v-slot:submitLabel> Get Z Score </template>
     </KidForm>
+    <ZScore
+      :gender="kid.gender"
+      :age="zScoreData.age"
+      :BMI="zScoreData.BMI"
+      :zScores="zScoreData.zScores"
+    />
   </div>
 </template>
 
 <script>
 import KidForm from '../components/KidForm'
+import ZScore from '../components/ZScore'
 
 export default {
   name: 'ZScoreView',
 
   components: {
     KidForm,
+    ZScore,
   },
 
   data() {
@@ -21,11 +29,12 @@ export default {
       kid: {
         dateOfBirth: '',
         dateOfVisit: '',
-        gender: '',
-        measuredType: '',
+        gender: 'boy',
+        measuredType: 'recumbent',
         height: '',
         weight: '',
       },
+      zScoreData: {},
     }
   },
 
