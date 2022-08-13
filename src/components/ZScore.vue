@@ -19,6 +19,11 @@
           <template v-slot:value> {{ formatBMI }} </template>
         </KPI>
       </v-col>
+    </v-row>
+    <v-row justify="center" class="ma-0">
+      <v-col cols="12">
+        <StandardSelect v-model="standard" />
+      </v-col>
       <v-col cols="6">
         <KPI>
           <template v-slot:left-icon>
@@ -26,7 +31,12 @@
           </template>
           <template v-slot:name> Z Score </template>
           <template v-slot:action>
-            <v-btn v-if="dataIsValid" class="primary" x-small>
+            <v-btn
+              v-if="dataIsValid"
+              class="primary"
+              x-small
+              @click="displayZScoreCharts = true"
+            >
               <v-icon dark small> mdi-chart-line </v-icon>
             </v-btn>
           </template>
@@ -34,12 +44,26 @@
         </KPI>
       </v-col>
     </v-row>
+    <v-row justify="center" class="ma-0">
+      <v-dialog
+        v-model="displayZScoreCharts"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+      >
+        <v-card tile>
+          <ZScoreCharts v-model="standard" @close="hideZScoreCharts" />
+        </v-card>
+      </v-dialog>
+    </v-row>
   </div>
 </template>
 
 <script>
 import { standards } from '../api/zscore/constants'
 import KPI from './KPI.vue'
+import StandardSelect from './StandardSelect.vue'
+import ZScoreCharts from './ZScoreCharts.vue'
 
 export default {
   name: 'ZScore',
@@ -67,9 +91,9 @@ export default {
 
   components: {
     KPI,
+    StandardSelect,
+    ZScoreCharts,
   },
-
-  standards,
 
   computed: {
     dataIsValid() {
@@ -97,21 +121,25 @@ export default {
     },
 
     zScoreForStandard() {
-      if (!this.standardName || !this.zScores[this.standardName]) {
+      if (!this.standard || !this.zScores[this.standard]) {
         return {}
       }
-      return this.zScores[this.standardName]
+
+      return this.zScores[this.standard]
     },
   },
 
   data() {
     return {
-      standardName: '',
+      displayZScoreCharts: false,
+      standard: standards[3].value,
     }
   },
 
-  created() {
-    this.standardName = this.$options.standards[3].value
+  methods: {
+    hideZScoreCharts() {
+      this.displayZScoreCharts = false
+    },
   },
 }
 </script>

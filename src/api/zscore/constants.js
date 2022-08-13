@@ -4,17 +4,17 @@ export const weightForAge = 'weightForAge'
 export const weightForLength = 'weightForLength'
 
 export const standards = [
-  { label: 'BMI for age', value: bmiForAge },
+  { text: 'BMI for age', value: bmiForAge },
   {
-    label: 'Length for age',
+    text: 'Length for age',
     value: lengthForAge,
   },
   {
-    label: 'Weight for age',
+    text: 'Weight for age',
     value: weightForAge,
   },
   {
-    label: 'Weight fot Length',
+    text: 'Weight fot Length',
     value: weightForLength,
   },
 ]
