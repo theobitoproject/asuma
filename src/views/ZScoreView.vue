@@ -3,12 +3,14 @@
     <ChildForm v-model="child" @submit="getZScore">
       <template v-slot:submitLabel> Get Z Score </template>
     </ChildForm>
-    <ZScore
-      :gender="child.gender"
-      :age="zScoreData.age"
-      :BMI="zScoreData.BMI"
-      :zScores="zScoreData.zScores"
-    />
+    <div class="mt-8">
+      <ZScore
+        :gender="child.gender"
+        :age="zScoreData.age"
+        :BMI="zScoreData.BMI"
+        :zScores="zScoreData.zScores"
+      />
+    </div>
   </div>
 </template>
 

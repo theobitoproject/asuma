@@ -1,23 +1,32 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="4">
-        <v-chip color="primary chip" :ripple="false">
-          <v-icon left> mdi-human-male-height </v-icon>
-          Age: {{ formatAge }} {{ monthLabel }}
-        </v-chip>
+    <v-row class="ma-0">
+      <v-col cols="6">
+        <KPI>
+          <template v-slot:left-icon>
+            <v-icon left> mdi-human-male-height </v-icon>
+          </template>
+          <template v-slot:name> Age [meses] </template>
+          <template v-slot:value> {{ formatAge }} </template>
+        </KPI>
       </v-col>
-      <v-col cols="4">
-        <v-chip color="primary chip" :ripple="false">
-          <v-icon left> mdi-gauge </v-icon>
-          BMI: {{ formatBMI }}
-        </v-chip>
+      <v-col cols="6">
+        <KPI>
+          <template v-slot:left-icon>
+            <v-icon left> mdi-gauge </v-icon>
+          </template>
+          <template v-slot:name> BMI </template>
+          <template v-slot:value> {{ formatBMI }} </template>
+        </KPI>
       </v-col>
-      <v-col cols="4">
-        <v-chip color="primary chip" :ripple="false">
-          <v-icon left> mdi-karate </v-icon>
-          Z Score: {{ formatZScore }}
-        </v-chip>
+      <v-col cols="6">
+        <KPI>
+          <template v-slot:left-icon>
+            <v-icon left> mdi-karate </v-icon>
+          </template>
+          <template v-slot:name> Z Score </template>
+          <template v-slot:value> {{ formatZScore }} </template>
+        </KPI>
       </v-col>
     </v-row>
   </div>
@@ -25,6 +34,7 @@
 
 <script>
 import { standards } from '../api/zscore/constants'
+import KPI from './KPI.vue'
 
 export default {
   name: 'ZScore',
@@ -48,6 +58,10 @@ export default {
         return {}
       },
     },
+  },
+
+  components: {
+    KPI,
   },
 
   standards,
@@ -77,13 +91,6 @@ export default {
         : this.zScoreForStandard.value.toFixed(2)
     },
 
-    monthLabel() {
-      if (!this.dataIsValid) {
-        return ''
-      }
-      return this.age === 1 ? 'mes' : 'meses'
-    },
-
     zScoreForStandard() {
       if (!this.standardName || !this.zScores[this.standardName]) {
         return {}
@@ -103,9 +110,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.chip {
-  width: 100%;
-}
-</style>
