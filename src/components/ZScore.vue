@@ -4,7 +4,7 @@
       <v-col cols="6">
         <KPI>
           <template v-slot:left-icon>
-            <v-icon left> mdi-human-male-height </v-icon>
+            <v-icon> mdi-human-male-height </v-icon>
           </template>
           <template v-slot:name> Age [meses] </template>
           <template v-slot:value> {{ formatAge }} </template>
@@ -13,7 +13,7 @@
       <v-col cols="6">
         <KPI>
           <template v-slot:left-icon>
-            <v-icon left> mdi-gauge </v-icon>
+            <v-icon> mdi-gauge </v-icon>
           </template>
           <template v-slot:name> BMI </template>
           <template v-slot:value> {{ formatBMI }} </template>
@@ -22,9 +22,14 @@
       <v-col cols="6">
         <KPI>
           <template v-slot:left-icon>
-            <v-icon left> mdi-karate </v-icon>
+            <v-icon> mdi-karate </v-icon>
           </template>
           <template v-slot:name> Z Score </template>
+          <template v-slot:action>
+            <v-btn v-if="dataIsValid" class="primary" x-small>
+              <v-icon dark small> mdi-chart-line </v-icon>
+            </v-btn>
+          </template>
           <template v-slot:value> {{ formatZScore }} </template>
         </KPI>
       </v-col>

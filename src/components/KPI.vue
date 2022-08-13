@@ -2,7 +2,12 @@
   <v-card elevation="2">
     <v-card-text>
       <slot name="left-icon" />
-      <slot name="name" />
+      <span>
+        <slot name="name" />
+      </span>
+      <span class="float-right">
+        <slot name="action" />
+      </span>
       <br />
       <v-card-subtitle class="font-weight-bold primary--text text-h5 value">
         <slot name="value" />
