@@ -4,7 +4,7 @@
       <v-col cols="4">
         <v-chip color="primary chip" :ripple="false">
           <v-icon left> mdi-human-male-height </v-icon>
-          Age: {{ formatAge }} {{ yearLabel }}
+          Age: {{ formatAge }} {{ monthLabel }}
         </v-chip>
       </v-col>
       <v-col cols="4">
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { standards } from './constants'
+import { standards } from '../api/zscore/constants'
 
 export default {
   name: 'ZScore',
@@ -77,11 +77,11 @@ export default {
         : this.zScoreForStandard.value.toFixed(2)
     },
 
-    yearLabel() {
+    monthLabel() {
       if (!this.dataIsValid) {
         return ''
       }
-      return this.age === 1 ? 'año' : 'años'
+      return this.age === 1 ? 'mes' : 'meses'
     },
 
     zScoreForStandard() {

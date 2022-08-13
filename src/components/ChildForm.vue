@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="6">
           <DatePicker
-            v-model="localKid.dateOfBirth"
+            v-model="localChild.dateOfBirth"
             label="Birthdate"
             required
             :rules="commonRules"
@@ -12,7 +12,7 @@
         </v-col>
         <v-col cols="6">
           <DatePicker
-            v-model="localKid.dateOfVisit"
+            v-model="localChild.dateOfVisit"
             label="Date of visit"
             required
             :rules="commonRules"
@@ -21,7 +21,7 @@
 
         <v-col cols="6">
           <v-radio-group
-            v-model="localKid.gender"
+            v-model="localChild.gender"
             required
             :rules="commonRules"
           >
@@ -33,7 +33,7 @@
 
         <v-col cols="6">
           <v-radio-group
-            v-model="localKid.measuredType"
+            v-model="localChild.measuredType"
             required
             :rules="commonRules"
           >
@@ -45,7 +45,7 @@
 
         <v-col cols="6">
           <v-text-field
-            v-model="localKid.height"
+            v-model="localChild.height"
             label="Height"
             type="number"
             required
@@ -54,7 +54,7 @@
         </v-col>
         <v-col cols="6">
           <v-text-field
-            v-model="localKid.weight"
+            v-model="localChild.weight"
             label="Weight"
             type="number"
             required
@@ -76,18 +76,18 @@
 import DatePicker from './DatePicker'
 
 export default {
-  name: 'KidForm',
+  name: 'ChildForm',
 
   components: {
     DatePicker,
   },
 
   model: {
-    prop: 'kid',
+    prop: 'child',
   },
 
   props: {
-    kid: {
+    child: {
       type: Object,
       default() {
         return
@@ -96,9 +96,9 @@ export default {
   },
 
   computed: {
-    localKid: {
+    localChild: {
       get() {
-        return this.kid
+        return this.child
       },
       set(newValue) {
         this.$emit('input', newValue)
