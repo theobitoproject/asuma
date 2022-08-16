@@ -11,30 +11,78 @@
         </ChildForm>
       </v-col>
       <v-col cols="12" sm="6">
-        <ZScore
+        <ZScoreKPIs
           :gender="child.gender"
           :age="zScoreData.age"
           :BMI="zScoreData.BMI"
-          :zScores="zScoreData.zScores"
-        />
+          :zScore="zScoreForStandard.value"
+          :disabled="!dataIsValid"
+          @displayZScoreCharts="displayZScoreCharts = true"
+        >
+          <template v-slot:standardSelect>
+            <StandardSelect v-model="standard" :disabled="!dataIsValid" />
+          </template>
+        </ZScoreKPIs>
       </v-col>
       <v-col cols="12" class="d-none d-sm-block"> hold for charts </v-col>
+      <v-dialog
+        v-model="displayZScoreCharts"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+      >
+        <v-card tile>
+          <ZScoreCharts
+            v-if="displayZScoreCharts"
+            v-model="standard"
+            :gender="child.gender"
+            :zScore="zScoreForStandard"
+            @close="displayZScoreCharts = false"
+          />
+        </v-card>
+      </v-dialog>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 import { getZScore } from '../api/zscore/getZScore'
+import { mapMutations } from 'vuex'
+import { standards } from '../api/zscore/constants'
 import ChildForm from '../components/ChildForm'
-import ZScore from '../components/ZScore'
+import StandardSelect from '../components/StandardSelect.vue'
+import ZScoreCharts from '../components/ZScoreCharts.vue'
+import ZScoreKPIs from '../components/ZScoreKPIs'
 
 export default {
   name: 'ZScoreView',
 
   components: {
     ChildForm,
-    ZScore,
+    StandardSelect,
+    ZScoreCharts,
+    ZScoreKPIs,
+  },
+
+  computed: {
+    dataIsValid() {
+      return (
+        !!this.child.gender &&
+        Object.entries(this.zScoreForStandard).length !== 0
+      )
+    },
+
+    zScoreForStandard() {
+      if (!this.standard || !this.zScoreData.zScores) {
+        return {}
+      }
+
+      if (!this.zScoreData.zScores[this.standard]) {
+        return {}
+      }
+
+      return this.zScoreData.zScores[this.standard]
+    },
   },
 
   data() {
@@ -47,6 +95,8 @@ export default {
         height: '79.5',
         weight: '8.7',
       },
+      displayZScoreCharts: false,
+      standard: standards[3].value,
       zScoreData: {},
     }
   },
