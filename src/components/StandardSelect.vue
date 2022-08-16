@@ -4,6 +4,7 @@
     :items="$options.standards"
     label="Standard"
     dense
+    :disabled="disabled"
   ></v-select>
 </template>
 
@@ -18,6 +19,10 @@ export default {
   },
 
   props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     standard: {
       type: String,
       default: '',

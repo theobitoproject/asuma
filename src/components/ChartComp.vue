@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <canvas :id="canvasId"></canvas>
-  </div>
+  <canvas :id="canvasId"></canvas>
 </template>
 
 <script>
@@ -22,6 +20,18 @@ export default {
       },
     },
     labels: {
+      type: Array,
+      default() {
+        return []
+      },
+    },
+    options: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+    plugins: {
       type: Array,
       default() {
         return []
@@ -55,12 +65,14 @@ export default {
           datasets: this.datasets,
         },
         options: {
+          ...this.options,
           animation: {
             onComplete: () => {
               this.loading = false
             },
           },
         },
+        plugins: this.plugins,
       }
     },
 

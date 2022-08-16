@@ -13,9 +13,9 @@ const getDefaultDatasets = (
 ) => {
   return [
     {
-      label: 'sd3Neg',
-      borderColor: '#468FAF',
-      backgroundColor: '#468FAF',
+      label: '+3SD',
+      borderColor: '#000000',
+      backgroundColor: '#000000',
       data: sd3Neg,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -23,9 +23,9 @@ const getDefaultDatasets = (
       borderJoinStyle: 'round',
     },
     {
-      label: 'sd2Neg',
-      borderColor: '#61A5C2',
-      backgroundColor: '#61A5C2',
+      label: '+2SD',
+      borderColor: '#F44336',
+      backgroundColor: '#F44336',
       data: sd2Neg,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -33,9 +33,9 @@ const getDefaultDatasets = (
       borderJoinStyle: 'round',
     },
     {
-      label: 'sd1Neg',
-      borderColor: '#89C2D9',
-      backgroundColor: '#89C2D9',
+      label: '+1SD',
+      borderColor: '#FBC02D',
+      backgroundColor: '#FBC02D',
       data: sd1Neg,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -44,8 +44,8 @@ const getDefaultDatasets = (
     },
     {
       label: 'Median',
-      backgroundColor: '#FF7B00',
-      borderColor: '#FF7B00',
+      backgroundColor: '#4CAF50',
+      borderColor: '#4CAF50',
       data: sd0,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -53,9 +53,9 @@ const getDefaultDatasets = (
       borderJoinStyle: 'round',
     },
     {
-      label: 'sd1Pos',
-      borderColor: '#89C2D9',
-      backgroundColor: '#89C2D9',
+      label: '-1SD',
+      borderColor: '#FBC02D',
+      backgroundColor: '#FBC02D',
       data: sd1Pos,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -63,9 +63,9 @@ const getDefaultDatasets = (
       borderJoinStyle: 'round',
     },
     {
-      label: 'sd2Pos',
-      borderColor: '#61A5C2',
-      backgroundColor: '#61A5C2',
+      label: '-2SD',
+      borderColor: '#F44336',
+      backgroundColor: '#F44336',
       data: sd2Pos,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -73,9 +73,9 @@ const getDefaultDatasets = (
       borderJoinStyle: 'round',
     },
     {
-      label: 'sd3Pos',
-      borderColor: '#468FAF',
-      backgroundColor: '#468FAF',
+      label: '-3SD',
+      borderColor: '#000000',
+      backgroundColor: '#000000',
       data: sd3Pos,
       borderWidth: 2.5,
       pointRadius: 0,
@@ -135,8 +135,7 @@ const getZScoreDataSet = (zScore, labels, sd0) => {
         r: 5,
       },
     ],
-    backgroundColor: '#eb675e',
-    borderColor: '#eb4034',
+    backgroundColor: '#2196F3',
   }
 }
 

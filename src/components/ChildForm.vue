@@ -1,11 +1,13 @@
 <template>
-  <v-form v-model="dataIsValid">
+  <v-form v-model="dataIsValid" ref="childForm">
     <v-container>
       <v-row>
         <v-col cols="6">
           <DatePicker
             v-model="localChild.dateOfBirth"
             label="Birthdate"
+            hint="[YYYY-MM-DD]"
+            persistent-hint
             required
             :rules="commonRules"
           />
@@ -14,6 +16,8 @@
           <DatePicker
             v-model="localChild.dateOfVisit"
             label="Date of visit"
+            hint="[YYYY-MM-DD]"
+            persistent-hint
             required
             :rules="commonRules"
           />
@@ -24,6 +28,7 @@
             v-model="localChild.gender"
             required
             :rules="commonRules"
+            class="mt-0 pt-0"
           >
             <template v-slot:label> Gender </template>
             <v-radio label="Boy" value="boy"></v-radio>
@@ -36,6 +41,7 @@
             v-model="localChild.measuredType"
             required
             :rules="commonRules"
+            class="mt-0 pt-0"
           >
             <template v-slot:label> Measured Type </template>
             <v-radio label="Recumbent" value="recumbent"></v-radio>
@@ -46,7 +52,7 @@
         <v-col cols="6">
           <v-text-field
             v-model="localChild.height"
-            label="Height"
+            label="Length/Height [cm]"
             type="number"
             required
             :rules="sizeRules"
@@ -55,7 +61,7 @@
         <v-col cols="6">
           <v-text-field
             v-model="localChild.weight"
-            label="Weight"
+            label="Weight [kg]"
             type="number"
             required
             :rules="sizeRules"
@@ -64,8 +70,15 @@
       </v-row>
 
       <div class="mt-8 d-flex justify-center">
-        <v-btn class="center" @click="$emit('submit')" :disabled="!dataIsValid">
-          <slot name="submitLabel" />
+        <v-btn class="center mr-1" @click="reset">
+          <slot name="resetLabel">reset</slot>
+        </v-btn>
+        <v-btn
+          class="primary center ml-1"
+          @click="$emit('submit')"
+          :disabled="!dataIsValid"
+        >
+          <slot name="submitLabel">Submit</slot>
         </v-btn>
       </div>
     </v-container>
@@ -117,6 +130,16 @@ export default {
         (v) => v > 0 || 'Name must be greater than 0',
       ],
     }
+  },
+
+  methods: {
+    async reset() {
+      this.$refs.childForm.reset()
+
+      await this.$nextTick()
+
+      this.$emit('resetted')
+    },
   },
 }
 </script>

@@ -1,24 +1,28 @@
 <template>
   <div class="pa-4">
-    <v-row justify="space-between">
-      <v-col cols="8">
-        <div class="standard-select">
-          <StandardSelect v-model="localStandard" />
-        </div>
-      </v-col>
-      <v-col cols="4">
-        <div class="d-flex justify-end">
-          <v-btn rounded @click="$emit('close')">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </div>
-      </v-col>
-    </v-row>
+    <div>
+      <v-row justify="space-between">
+        <v-col cols="8">
+          <div class="standard-select">
+            <StandardSelect v-model="localStandard" />
+          </div>
+        </v-col>
+        <v-col cols="4">
+          <div class="d-flex justify-end">
+            <v-btn rounded @click="$emit('close')">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-col>
+      </v-row>
+    </div>
     <div>
       <ChartComp
         canvasId="z-score-chart"
         :datasets="datasets"
         :labels="labels"
+        :options="options"
+        :plugins="$options.plugins"
         ref="zScoreChart"
       />
     </div>
@@ -27,6 +31,7 @@
 
 <script>
 import { getDataSets } from '../api/zscore/getDataSets'
+import { getOptions, plugins } from '../api/zscore/configuration'
 import ChartComp from './ChartComp.vue'
 import StandardSelect from './StandardSelect.vue'
 
@@ -51,6 +56,8 @@ export default {
       required: true,
     },
   },
+
+  plugins,
 
   components: {
     ChartComp,
@@ -78,6 +85,7 @@ export default {
     return {
       datasets: [],
       labels: [],
+      options: {},
     }
   },
 
@@ -90,6 +98,7 @@ export default {
       )
       this.datasets = datasets
       this.labels = labels
+      this.options = getOptions(this.standard)
 
       await this.$nextTick()
 

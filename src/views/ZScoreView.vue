@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ChildForm v-model="child" @submit="getZScore">
+    <ChildForm v-model="child" @submit="getZScore" @resetted="handleFormReset">
       <template v-slot:submitLabel> Get Z Score </template>
     </ChildForm>
-    <div class="mt-8">
+    <div class="mt-4">
       <ZScore
         :gender="child.gender"
         :age="zScoreData.age"
@@ -44,6 +44,10 @@ export default {
   methods: {
     async getZScore() {
       this.zScoreData = await getZScore(this.child)
+    },
+
+    handleFormReset() {
+      this.zScoreData = {}
     },
   },
 }

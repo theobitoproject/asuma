@@ -6,7 +6,7 @@
           <template v-slot:left-icon>
             <v-icon> mdi-human-male-height </v-icon>
           </template>
-          <template v-slot:name> Age [meses] </template>
+          <template v-slot:name> Age [months] </template>
           <template v-slot:value> {{ formatAge }} </template>
         </KPI>
       </v-col>
@@ -22,7 +22,7 @@
     </v-row>
     <v-row justify="center" class="ma-0">
       <v-col cols="12">
-        <StandardSelect v-model="standard" />
+        <StandardSelect v-model="standard" :disabled="!dataIsValid" />
       </v-col>
       <v-col cols="6">
         <KPI>
@@ -31,14 +31,16 @@
           </template>
           <template v-slot:name> Z Score </template>
           <template v-slot:action>
-            <v-btn
-              v-if="dataIsValid"
-              class="primary"
-              x-small
-              @click="displayZScoreCharts = true"
-            >
-              <v-icon dark small> mdi-chart-line </v-icon>
-            </v-btn>
+            <div class="mt-n1">
+              <v-btn
+                v-if="dataIsValid"
+                class="primary"
+                x-small
+                @click="displayZScoreCharts = true"
+              >
+                <v-icon dark small> mdi-chart-line </v-icon>
+              </v-btn>
+            </div>
           </template>
           <template v-slot:value> {{ formatZScore }} </template>
         </KPI>
@@ -76,7 +78,7 @@ export default {
   props: {
     gender: {
       type: String,
-      required: true,
+      default: '',
     },
     age: {
       type: Number,
@@ -102,7 +104,9 @@ export default {
 
   computed: {
     dataIsValid() {
-      return Object.entries(this.zScoreForStandard).length !== 0
+      return (
+        !!this.gender && Object.entries(this.zScoreForStandard).length !== 0
+      )
     },
 
     formatAge() {
