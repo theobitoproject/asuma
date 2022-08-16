@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { getDataSets } from '../api/zscore/getDataSets'
 import { getOptions, plugins } from '../api/zscore/configuration'
 import ChartComp from './ChartComp.vue'
@@ -90,19 +91,29 @@ export default {
   },
 
   methods: {
+    ...mapMutations('LoadingModule', ['setLoading']),
+
     async render() {
-      const { labels, datasets } = await getDataSets(
-        this.standard,
-        this.gender,
-        this.zScore
-      )
-      this.datasets = datasets
-      this.labels = labels
-      this.options = getOptions(this.standard)
+      try {
+        this.setLoading(true)
 
-      await this.$nextTick()
+        const { labels, datasets } = await getDataSets(
+          this.standard,
+          this.gender,
+          this.zScore
+        )
+        this.datasets = datasets
+        this.labels = labels
+        this.options = getOptions(this.standard)
 
-      this.$refs.zScoreChart.render()
+        await this.$nextTick()
+
+        this.$refs.zScoreChart.render()
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.setLoading(false)
+      }
     },
   },
 

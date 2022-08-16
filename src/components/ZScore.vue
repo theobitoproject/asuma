@@ -55,6 +55,7 @@
       >
         <v-card tile>
           <ZScoreCharts
+            v-if="displayZScoreCharts"
             v-model="standard"
             :gender="gender"
             :zScore="zScoreForStandard"

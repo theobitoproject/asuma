@@ -9,15 +9,21 @@
     <v-main>
       <router-view />
     </v-main>
+
+    <v-overlay :value="loading" z-index="300">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-app>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'App',
 
-  data: () => ({
-    //
-  }),
+  computed: {
+    ...mapState('LoadingModule', ['loading']),
+  },
 }
 </script>

@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { getZScore } from '../api/zscore/getZScore'
 import ChildForm from '../components/ChildForm'
 import ZScore from '../components/ZScore'
@@ -42,8 +43,17 @@ export default {
   },
 
   methods: {
+    ...mapMutations('LoadingModule', ['setLoading']),
+
     async getZScore() {
-      this.zScoreData = await getZScore(this.child)
+      try {
+        this.setLoading(true)
+        this.zScoreData = await getZScore(this.child)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.setLoading(false)
+      }
     },
 
     handleFormReset() {
