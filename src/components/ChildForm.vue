@@ -52,7 +52,7 @@
         <v-col cols="6">
           <v-text-field
             v-model="localChild.height"
-            label="Length/Height [cm]"
+            label="Length / Height [cm]"
             type="number"
             required
             :rules="sizeRules"

@@ -1,17 +1,26 @@
 <template>
-  <div>
-    <ChildForm v-model="child" @submit="getZScore" @resetted="handleFormReset">
-      <template v-slot:submitLabel> Get Z Score </template>
-    </ChildForm>
-    <div class="mt-4">
-      <ZScore
-        :gender="child.gender"
-        :age="zScoreData.age"
-        :BMI="zScoreData.BMI"
-        :zScores="zScoreData.zScores"
-      />
-    </div>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col cols="12" sm="6">
+        <ChildForm
+          v-model="child"
+          @submit="getZScore"
+          @resetted="handleFormReset"
+        >
+          <template v-slot:submitLabel> Get Z Score </template>
+        </ChildForm>
+      </v-col>
+      <v-col cols="12" sm="6">
+        <ZScore
+          :gender="child.gender"
+          :age="zScoreData.age"
+          :BMI="zScoreData.BMI"
+          :zScores="zScoreData.zScores"
+        />
+      </v-col>
+      <v-col cols="12" class="d-none d-sm-block"> hold for charts </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

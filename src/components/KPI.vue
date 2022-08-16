@@ -9,7 +9,9 @@
         <slot name="action" />
       </span>
       <br />
-      <v-card-subtitle class="font-weight-bold primary--text text-h5 value">
+      <v-card-subtitle
+        class="font-weight-bold primary--text text-h6 value pa-1"
+      >
         <slot name="value" />
       </v-card-subtitle>
     </v-card-text>

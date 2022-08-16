@@ -16,7 +16,7 @@ const getAxisLabelsForStandard = (standard) => {
       break
 
     case lengthForAge:
-      xAxisLabel = 'Length/Height [cm]'
+      xAxisLabel = 'Length / Height [cm]'
       yAxisLabel = 'Age [months]'
       break
 
@@ -27,7 +27,7 @@ const getAxisLabelsForStandard = (standard) => {
 
     case weightForLength:
       xAxisLabel = 'Weight [kg]'
-      yAxisLabel = 'Length/Height [cm]'
+      yAxisLabel = 'Length / Height [cm]'
       break
 
     default:
