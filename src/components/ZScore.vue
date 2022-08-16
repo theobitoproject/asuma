@@ -52,7 +52,12 @@
         transition="dialog-bottom-transition"
       >
         <v-card tile>
-          <ZScoreCharts v-model="standard" @close="hideZScoreCharts" />
+          <ZScoreCharts
+            v-model="standard"
+            :gender="gender"
+            :zScore="zScoreForStandard"
+            @close="hideZScoreCharts"
+          />
         </v-card>
       </v-dialog>
     </v-row>
