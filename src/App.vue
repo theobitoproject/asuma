@@ -1,13 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <v-avatar size="45px" color="white">
-        <img src="./assets/logo.svg" alt="logo" />
-      </v-avatar>
+    <v-app-bar app color="primary" dark fixed>
+      <v-container>
+        <v-row>
+          <v-avatar size="45px" color="white">
+            <img src="./assets/logo.svg" alt="logo" />
+          </v-avatar>
 
-      <div class="d-flex align-center ml-4">
-        <div class="text-h4">Chiki</div>
-      </div>
+          <div class="d-flex align-center ml-4">
+            <div class="text-h4">Chiki</div>
+          </div>
+        </v-row>
+      </v-container>
     </v-app-bar>
 
     <v-main>
