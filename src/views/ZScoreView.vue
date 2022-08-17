@@ -11,35 +11,37 @@
         </ChildForm>
       </v-col>
       <v-col cols="12" sm="6" md="8">
-        <div class="mt-sm-7">
-          <v-row justify="center" justify-md="start">
-            <v-col cols="12" md="4" lg="3">
-              <StandardSelect v-model="standard" :disabled="!dataIsValid" />
-            </v-col>
-            <v-col cols="8" class="d-none d-md-block d-lg-none"> </v-col>
-            <v-col cols="6" md="4" lg="3">
-              <AgeKPI :age="zScoreData.age" :disabled="!dataIsValid" />
-            </v-col>
-            <v-col cols="6" md="4" lg="3">
-              <BMIKPI :BMI="zScoreData.BMI" :disabled="!dataIsValid" />
-            </v-col>
-            <v-col cols="7" md="4" lg="3">
-              <ZScoreKPI
-                :zScore="zScoreForStandard.value"
-                :disabled="!dataIsValid"
-                @displayZScoreCharts="displayCharts"
-              />
-            </v-col>
-            <v-col cols="12" class="d-none d-md-block">
-              <ZScoreCharts
-                v-if="dataIsValid"
-                v-model="standard"
-                :gender="child.gender"
-                :zScore="zScoreForStandard"
-                :displayHandlers="false"
-              />
-            </v-col>
-          </v-row>
+        <div class="mt-sm-4">
+          <v-container>
+            <v-row justify="center" justify-md="start">
+              <v-col cols="12" md="4" lg="3">
+                <StandardSelect v-model="standard" :disabled="!dataIsValid" />
+              </v-col>
+              <v-col cols="8" class="d-none d-md-block d-lg-none"> </v-col>
+              <v-col cols="6" md="4" lg="3">
+                <AgeKPI :age="zScoreData.age" :disabled="!dataIsValid" />
+              </v-col>
+              <v-col cols="6" md="4" lg="3">
+                <BMIKPI :BMI="zScoreData.BMI" :disabled="!dataIsValid" />
+              </v-col>
+              <v-col cols="7" md="4" lg="3">
+                <ZScoreKPI
+                  :zScore="zScoreForStandard.value"
+                  :disabled="!dataIsValid"
+                  @displayZScoreCharts="displayCharts"
+                />
+              </v-col>
+              <v-col cols="12" class="d-none d-md-block">
+                <ZScoreCharts
+                  v-if="dataIsValid"
+                  v-model="standard"
+                  :gender="child.gender"
+                  :zScore="zScoreForStandard"
+                  :displayHandlers="false"
+                />
+              </v-col>
+            </v-row>
+          </v-container>
         </div>
       </v-col>
       <v-col cols="12" class="d-none d-sm-block d-md-none">
@@ -52,6 +54,30 @@
         />
       </v-col>
     </v-row>
+    <v-btn
+      class="mb-12 d-block d-sm-none"
+      fab
+      small
+      fixed
+      bottom
+      right
+      @click="handleFormReset"
+    >
+      <v-icon>mdi-delete</v-icon>
+    </v-btn>
+    <v-btn
+      class="d-block d-sm-none"
+      color="primary"
+      fab
+      dark
+      small
+      fixed
+      bottom
+      right
+      @click="getZScore"
+    >
+      <v-icon>mdi-refresh</v-icon>
+    </v-btn>
     <v-dialog
       v-model="displayChartsOnDialog"
       fullscreen

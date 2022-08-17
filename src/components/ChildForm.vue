@@ -69,7 +69,7 @@
         </v-col>
       </v-row>
 
-      <div class="mt-8 d-flex justify-center">
+      <div class="mt-8 d-none d-sm-flex justify-center">
         <v-btn class="center mr-1" @click="reset">
           <slot name="resetLabel">reset</slot>
         </v-btn>
