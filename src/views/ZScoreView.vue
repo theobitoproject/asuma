@@ -14,14 +14,14 @@
         <div class="mt-sm-4">
           <v-container>
             <v-row justify="center" justify-md="start">
-              <v-col cols="12" md="4" lg="3">
+              <v-col cols="12" md="5" lg="4">
                 <StandardSelect v-model="standard" :disabled="!dataIsValid" />
               </v-col>
-              <v-col cols="8" class="d-none d-md-block d-lg-none"> </v-col>
+              <v-col cols="7" class="d-none d-md-block d-lg-none"> </v-col>
               <v-col cols="6" md="4" lg="3">
                 <AgeKPI :age="zScoreData.age" :disabled="!dataIsValid" />
               </v-col>
-              <v-col cols="6" md="4" lg="3">
+              <v-col cols="6" md="4" lg="2">
                 <BMIKPI :BMI="zScoreData.BMI" :disabled="!dataIsValid" />
               </v-col>
               <v-col cols="7" md="4" lg="3">
