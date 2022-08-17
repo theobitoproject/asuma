@@ -1,7 +1,11 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
+      <v-avatar size="50px" color="white">
+        <img src="./assets/logo.svg" alt="logo" />
+      </v-avatar>
+
+      <div class="d-flex align-center ml-4">
         <div class="text-h4">Chiki</div>
       </div>
     </v-app-bar>
