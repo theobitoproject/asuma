@@ -40,10 +40,10 @@ const getAxisLabelsForStandard = (standard) => {
   }
 }
 
-export const getOptions = (standard) => {
+export const getOptions = (standard, aspectRatio) => {
   const { xAxisLabel, yAxisLabel } = getAxisLabelsForStandard(standard)
   return {
-    aspectRatio: 0.5,
+    aspectRatio,
     layout: {
       padding: {
         right: 50,

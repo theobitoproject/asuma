@@ -17,27 +17,36 @@
           :BMI="zScoreData.BMI"
           :zScore="zScoreForStandard.value"
           :disabled="!dataIsValid"
-          @displayZScoreCharts="displayZScoreCharts = true"
+          @displayZScoreCharts="displayCharts"
         >
           <template v-slot:standardSelect>
             <StandardSelect v-model="standard" :disabled="!dataIsValid" />
           </template>
         </ZScoreKPIs>
       </v-col>
-      <v-col cols="12" class="d-none d-sm-block"> hold for charts </v-col>
+      <v-col cols="12" class="d-none d-sm-block">
+        <ZScoreCharts
+          v-if="dataIsValid"
+          v-model="standard"
+          :gender="child.gender"
+          :zScore="zScoreForStandard"
+          :displayCloseButton="false"
+        />
+      </v-col>
       <v-dialog
-        v-model="displayZScoreCharts"
+        v-model="displayChartsOnDialog"
         fullscreen
         hide-overlay
         transition="dialog-bottom-transition"
       >
         <v-card tile>
           <ZScoreCharts
-            v-if="displayZScoreCharts"
+            v-if="displayChartsOnDialog"
             v-model="standard"
+            :forMobile="true"
             :gender="child.gender"
             :zScore="zScoreForStandard"
-            @close="displayZScoreCharts = false"
+            @close="displayChartsOnDialog = false"
           />
         </v-card>
       </v-dialog>
@@ -95,7 +104,7 @@ export default {
         height: '79.5',
         weight: '8.7',
       },
-      displayZScoreCharts: false,
+      displayChartsOnDialog: false,
       standard: standards[3].value,
       zScoreData: {},
     }
@@ -103,6 +112,12 @@ export default {
 
   methods: {
     ...mapMutations('LoadingModule', ['setLoading']),
+
+    displayCharts() {
+      if (this.$vuetify.breakpoint.name === 'xs') {
+        this.displayChartsOnDialog = true
+      }
+    },
 
     async getZScore() {
       try {

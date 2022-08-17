@@ -7,7 +7,7 @@
             <StandardSelect v-model="localStandard" />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col v-if="displayCloseButton" cols="4">
           <div class="d-flex justify-end">
             <v-btn rounded @click="$emit('close')">
               <v-icon>mdi-close</v-icon>
@@ -16,9 +16,9 @@
         </v-col>
       </v-row>
     </div>
-    <div>
+    <div :class="{ 'chart-container': !forMobile }">
       <ChartComp
-        canvasId="z-score-chart"
+        :canvasId="canvasId"
         :datasets="datasets"
         :labels="labels"
         :options="options"
@@ -33,6 +33,7 @@
 import { mapMutations } from 'vuex'
 import { getDataSets } from '../api/zscore/getDataSets'
 import { getOptions, plugins } from '../api/zscore/configuration'
+import { getRandomString } from '../utils/strings'
 import ChartComp from './ChartComp.vue'
 import StandardSelect from './StandardSelect.vue'
 
@@ -47,6 +48,14 @@ export default {
     gender: {
       type: String,
       required: true,
+    },
+    displayCloseButton: {
+      type: Boolean,
+      default: true,
+    },
+    forMobile: {
+      type: Boolean,
+      default: false,
     },
     standard: {
       type: String,
@@ -84,6 +93,7 @@ export default {
 
   data() {
     return {
+      canvasId: `z-score-charts-${getRandomString(10)}`,
       datasets: [],
       labels: [],
       options: {},
@@ -104,7 +114,10 @@ export default {
         )
         this.datasets = datasets
         this.labels = labels
-        this.options = getOptions(this.standard)
+
+        const aspectRatio = this.$vuetify.breakpoint.name === 'xs' ? 0.5 : 2
+
+        this.options = getOptions(this.standard, aspectRatio)
 
         await this.$nextTick()
 
@@ -124,6 +137,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chart-container {
+  width: 100%;
+}
+
 .standard-select {
   max-width: 15rem;
 }
