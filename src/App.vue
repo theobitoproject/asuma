@@ -18,6 +18,18 @@
       <router-view />
     </v-main>
 
+    <v-footer padless>
+      <v-card class="flex primary lighten-1" flat tile>
+        <v-card-text class="py-2 white--text text-center">
+          Made by
+          <a class="white--text" :href="$options.contactUrl" target="_blank"
+            ><strong>Marlon</strong></a
+          >
+          <v-icon right color="white"> mdi-arm-flex </v-icon>
+        </v-card-text>
+      </v-card>
+    </v-footer>
+
     <v-overlay :value="loading" z-index="300">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
@@ -26,6 +38,10 @@
 
 <script>
 import { mapState } from 'vuex'
+import { ENVARS, getEnvar } from './utils/enver'
+
+const contactUrl = getEnvar(ENVARS.CONTACT_URL)
+console.log(process.env)
 
 export default {
   name: 'App',
@@ -33,5 +49,7 @@ export default {
   computed: {
     ...mapState('LoadingModule', ['loading']),
   },
+
+  contactUrl,
 }
 </script>
