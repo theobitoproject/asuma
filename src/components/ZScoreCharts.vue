@@ -1,13 +1,13 @@
 <template>
   <div class="pa-4">
-    <div>
+    <div v-if="displayHandlers">
       <v-row justify="space-between">
         <v-col cols="8">
           <div class="standard-select">
             <StandardSelect v-model="localStandard" />
           </div>
         </v-col>
-        <v-col v-if="displayCloseButton" cols="4">
+        <v-col cols="4">
           <div class="d-flex justify-end">
             <v-btn rounded @click="$emit('close')">
               <v-icon>mdi-close</v-icon>
@@ -49,7 +49,7 @@ export default {
       type: String,
       required: true,
     },
-    displayCloseButton: {
+    displayHandlers: {
       type: Boolean,
       default: true,
     },
@@ -115,7 +115,13 @@ export default {
         this.datasets = datasets
         this.labels = labels
 
-        const aspectRatio = this.$vuetify.breakpoint.name === 'xs' ? 0.5 : 2
+        const breakpoint = this.$vuetify.breakpoint.name
+        let aspectRatio = 1.3
+        if (breakpoint === 'xs') {
+          aspectRatio = 0.5
+        } else if (breakpoint === 'sm') {
+          aspectRatio = 1.3
+        }
 
         this.options = getOptions(this.standard, aspectRatio)
 
@@ -137,8 +143,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~vuetify/src/styles/settings/_variables';
+
 .chart-container {
-  width: 100%;
+  margin: 0 auto;
+  width: 800px;
+}
+
+@media #{map-get($display-breakpoints, 'md-and-down')} {
+  .chart-container {
+    width: 100%;
+  }
 }
 
 .standard-select {
