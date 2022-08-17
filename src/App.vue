@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-avatar size="50px" color="white">
+      <v-avatar size="45px" color="white">
         <img src="./assets/logo.svg" alt="logo" />
       </v-avatar>
 
