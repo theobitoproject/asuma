@@ -41,7 +41,6 @@ import { mapState } from 'vuex'
 import { ENVARS, getEnvar } from './utils/enver'
 
 const contactUrl = getEnvar(ENVARS.CONTACT_URL)
-console.log(process.env)
 
 export default {
   name: 'App',

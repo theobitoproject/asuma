@@ -102,12 +102,24 @@
 import { getZScore } from '../api/zscore/getZScore'
 import { mapMutations } from 'vuex'
 import { standards } from '../api/zscore/constants'
+import { fetchObject, storeObject } from '../utils/local-storage'
 import AgeKPI from '../components/KPIs/AgeKPI.vue'
 import BMIKPI from '../components/KPIs/BMIKPI.vue'
 import ChildForm from '../components/ChildForm'
 import StandardSelect from '../components/StandardSelect.vue'
 import ZScoreCharts from '../components/ZScoreCharts.vue'
 import ZScoreKPI from '../components/KPIs/ZScoreKPI.vue'
+
+const initialChildData = {
+  dateOfBirth: '2019-09-20',
+  dateOfVisit: '2021-07-07',
+  gender: 'boy',
+  measuredType: 'recumbent',
+  height: '79.5',
+  weight: '8.7',
+}
+
+const CHILD_DATA_STORE_KEY = 'child_data'
 
 export default {
   name: 'ZScoreView',
@@ -142,16 +154,21 @@ export default {
     },
   },
 
-  data() {
-    return {
-      child: {
-        dateOfBirth: '2019-09-20',
-        dateOfVisit: '2021-07-07',
-        gender: 'boy',
-        measuredType: 'recumbent',
-        height: '79.5',
-        weight: '8.7',
+  watch: {
+    child: {
+      handler() {
+        this.saveChildInLocal()
       },
+      deep: true,
+    },
+  },
+
+  data() {
+    const storedChildData = fetchObject(CHILD_DATA_STORE_KEY)
+    const child = storedChildData === null ? initialChildData : storedChildData
+
+    return {
+      child,
       displayChartsOnDialog: false,
       standard: standards[3].value,
       zScoreData: {},
@@ -180,6 +197,10 @@ export default {
 
     handleFormReset() {
       this.zScoreData = {}
+    },
+
+    saveChildInLocal() {
+      storeObject(CHILD_DATA_STORE_KEY, this.child)
     },
   },
 }
