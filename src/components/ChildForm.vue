@@ -70,11 +70,8 @@
       </v-row>
 
       <div class="mt-8 d-none d-sm-flex justify-center">
-        <v-btn class="center mr-1" @click="reset">
-          <slot name="resetLabel">reset</slot>
-        </v-btn>
         <v-btn
-          class="primary center ml-1"
+          class="primary center"
           @click="$emit('submit')"
           :disabled="!dataIsValid"
         >
@@ -130,16 +127,6 @@ export default {
         (v) => v > 0 || 'Name must be greater than 0',
       ],
     }
-  },
-
-  methods: {
-    async reset() {
-      this.$refs.childForm.reset()
-
-      await this.$nextTick()
-
-      this.$emit('resetted')
-    },
   },
 }
 </script>

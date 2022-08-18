@@ -17,11 +17,6 @@ export default {
   props: {
     age: {
       type: Number,
-      default: 0,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
     },
   },
 
@@ -31,7 +26,7 @@ export default {
 
   computed: {
     formatAge() {
-      return this.disabled ? '-' : this.age
+      return this.age === undefined ? '-' : this.age
     },
   },
 }

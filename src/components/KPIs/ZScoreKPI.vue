@@ -15,13 +15,8 @@ export default {
   name: 'AgeKPI',
 
   props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
     zScore: {
-      type: [String, Number],
-      default: '',
+      type: Number,
     },
   },
 
@@ -31,10 +26,7 @@ export default {
 
   computed: {
     formatZScore() {
-      if (this.disabled) {
-        return '-'
-      }
-      return this.zScore === 0 ? this.zScore : this.zScore.toFixed(2)
+      return this.zScore === undefined ? '-' : this.zScore.toFixed(2)
     },
   },
 }

@@ -56,6 +56,9 @@ export const getDataSets = async (standardName, gender, zScore) => {
 export const addZScoreDataset = (datasets, standard, child, age, BMI) => {
   let x,
     y = 0
+  if (age === undefined || BMI === undefined) {
+    return
+  }
 
   switch (standard) {
     case bmiForAge:

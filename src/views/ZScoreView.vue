@@ -2,13 +2,8 @@
   <v-container>
     <v-row>
       <v-col cols="12" sm="6" md="4">
-        <ChildForm
-          v-model="child"
-          ref="childForm"
-          @submit="getZScore"
-          @resetted="reset"
-        >
-          <template v-slot:submitLabel> Get Z Score </template>
+        <ChildForm v-model="child" ref="childForm" @submit="getZScore">
+          <template v-slot:submitLabel> Calculate </template>
         </ChildForm>
       </v-col>
       <v-col cols="12" sm="6" md="8">
@@ -16,30 +11,27 @@
           <v-container>
             <v-row justify="center" justify-md="start">
               <v-col cols="12" md="5" lg="4">
-                <StandardSelect v-model="standard" :disabled="!dataIsValid" />
+                <StandardSelect v-model="standard" />
               </v-col>
               <v-col cols="7" class="d-none d-md-block d-lg-none"> </v-col>
               <v-col cols="6" md="4" lg="3">
-                <AgeKPI :age="zScoreData.age" :disabled="!dataIsValid" />
+                <AgeKPI :age="zScoreData.age" />
               </v-col>
               <v-col cols="6" md="4" lg="2">
-                <BMIKPI :BMI="zScoreData.BMI" :disabled="!dataIsValid" />
+                <BMIKPI :BMI="zScoreData.BMI" />
               </v-col>
               <v-col cols="7" md="4" lg="3">
-                <ZScoreKPI
-                  :zScore="zScoreForStandard.value"
-                  :disabled="!dataIsValid"
-                />
+                <ZScoreKPI :zScore="zScoreForStandard.value" />
               </v-col>
               <v-col cols="12" class="d-none d-md-block">
                 <ZScoreCharts
-                  v-if="dataIsValid"
                   v-model="standard"
                   :age="zScoreData.age"
                   :BMI="zScoreData.BMI"
                   :child="child"
                   :zScore="zScoreForStandard"
                   :displayHandlers="false"
+                  ref="zScoreCharts1"
                 />
               </v-col>
             </v-row>
@@ -48,22 +40,20 @@
       </v-col>
       <v-col cols="12" class="d-none d-sm-block d-md-none">
         <ZScoreCharts
-          v-if="dataIsValid"
           v-model="standard"
           :age="zScoreData.age"
           :BMI="zScoreData.BMI"
           :child="child"
           :zScore="zScoreForStandard"
           :displayHandlers="false"
+          ref="zScoreCharts2"
         />
       </v-col>
     </v-row>
     <div class="d-block d-sm-none">
       <FloatingActionButtons
-        :disableDisplayCharts="!dataIsValid"
         @getZScore="getZScore"
         @displayCharts="displayCharts"
-        @reset="$refs.childForm.reset()"
       />
     </div>
     <v-dialog
@@ -175,15 +165,22 @@ export default {
     ...mapMutations('LoadingModule', ['setLoading']),
 
     displayCharts() {
-      if (this.$vuetify.breakpoint.name === 'xs') {
+      if (this.isMobile()) {
         this.displayChartsOnDialog = true
       }
+    },
+
+    isMobile() {
+      return this.$vuetify.breakpoint.name === 'xs'
     },
 
     async getZScore() {
       try {
         this.setLoading(true)
         this.zScoreData = await getZScore(this.child)
+        if (!this.isMobile()) {
+          await this.updateCharts()
+        }
       } catch (err) {
         console.error(err)
         this.setGenericErrorMessage()
@@ -193,8 +190,11 @@ export default {
       }
     },
 
-    reset() {
-      this.zScoreData = {}
+    async updateCharts() {
+      // TODO: how to handle these two chart components?
+      // setting 1 and 2 is hacky and brittle
+      await this.$refs.zScoreCharts1.render()
+      await this.$refs.zScoreCharts2.render()
     },
 
     saveChildInLocal() {

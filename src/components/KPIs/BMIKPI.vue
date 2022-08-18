@@ -17,11 +17,6 @@ export default {
   props: {
     BMI: {
       type: Number,
-      default: 0,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
     },
   },
 
@@ -31,10 +26,7 @@ export default {
 
   computed: {
     formatBMI() {
-      if (this.disabled) {
-        return '-'
-      }
-      return this.BMI === 0 ? this.BMI : this.BMI.toFixed(2)
+      return this.BMI === undefined ? '-' : this.BMI.toFixed(2)
     },
   },
 }

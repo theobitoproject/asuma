@@ -55,6 +55,10 @@ export default class DataPointer {
 
   getSingleDataPointRange(key, standardName, ageRange) {
     if (standardName === weightForLength) {
+      if (!ageRange) {
+        return this.dataPointRangesDB[key][0].dataPoints
+      }
+
       return this.dataPointRangesDB[key].find(
         ({ ageRange: ref }) => ref === ageRange
       ).dataPoints

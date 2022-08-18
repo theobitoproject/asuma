@@ -48,11 +48,9 @@ export default {
   props: {
     age: {
       type: Number,
-      default: 0,
     },
     BMI: {
       type: Number,
-      default: 0,
     },
     child: {
       type: Object,
