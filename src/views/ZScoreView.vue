@@ -179,6 +179,7 @@ export default {
         this.setLoading(true)
         this.zScoreData = await getZScore(this.child)
         if (!this.isMobile()) {
+          await this.$nextTick()
           await this.updateCharts()
         }
       } catch (err) {
