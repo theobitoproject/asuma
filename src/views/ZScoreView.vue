@@ -4,8 +4,9 @@
       <v-col cols="12" sm="6" md="4">
         <ChildForm
           v-model="child"
+          ref="childForm"
           @submit="getZScore"
-          @resetted="handleFormReset"
+          @resetted="reset"
         >
           <template v-slot:submitLabel> Get Z Score </template>
         </ChildForm>
@@ -28,7 +29,6 @@
                 <ZScoreKPI
                   :zScore="zScoreForStandard.value"
                   :disabled="!dataIsValid"
-                  @displayZScoreCharts="displayCharts"
                 />
               </v-col>
               <v-col cols="12" class="d-none d-md-block">
@@ -54,30 +54,14 @@
         />
       </v-col>
     </v-row>
-    <v-btn
-      class="mb-12 d-block d-sm-none"
-      fab
-      small
-      fixed
-      bottom
-      right
-      @click="handleFormReset"
-    >
-      <v-icon>mdi-delete</v-icon>
-    </v-btn>
-    <v-btn
-      class="d-block d-sm-none"
-      color="primary"
-      fab
-      dark
-      small
-      fixed
-      bottom
-      right
-      @click="getZScore"
-    >
-      <v-icon>mdi-refresh</v-icon>
-    </v-btn>
+    <div class="d-block d-sm-none">
+      <FloatingActionButtons
+        :disableDisplayCharts="!dataIsValid"
+        @getZScore="getZScore"
+        @displayCharts="displayCharts"
+        @reset="$refs.childForm.reset()"
+      />
+    </div>
     <v-dialog
       v-model="displayChartsOnDialog"
       fullscreen
@@ -95,6 +79,15 @@
         />
       </v-card>
     </v-dialog>
+
+    <SnackBar
+      color="red lighten-1"
+      :show="displayErrorMessage"
+      :timeout="4000"
+      @close="displayErrorMessage = false"
+    >
+      <template v-slot:content> We're sorry. Something failed! </template>
+    </SnackBar>
   </v-container>
 </template>
 
@@ -106,6 +99,8 @@ import { fetchObject, storeObject } from '../utils/local-storage'
 import AgeKPI from '../components/KPIs/AgeKPI.vue'
 import BMIKPI from '../components/KPIs/BMIKPI.vue'
 import ChildForm from '../components/ChildForm'
+import FloatingActionButtons from '../components/FloatingActionButtons.vue'
+import SnackBar from '../components/SnackBar.vue'
 import StandardSelect from '../components/StandardSelect.vue'
 import ZScoreCharts from '../components/ZScoreCharts.vue'
 import ZScoreKPI from '../components/KPIs/ZScoreKPI.vue'
@@ -128,6 +123,8 @@ export default {
     AgeKPI,
     BMIKPI,
     ChildForm,
+    FloatingActionButtons,
+    SnackBar,
     StandardSelect,
     ZScoreCharts,
     ZScoreKPI,
@@ -170,6 +167,7 @@ export default {
     return {
       child,
       displayChartsOnDialog: false,
+      displayErrorMessage: false,
       standard: standards[3].value,
       zScoreData: {},
     }
@@ -190,12 +188,13 @@ export default {
         this.zScoreData = await getZScore(this.child)
       } catch (err) {
         console.error(err)
+        this.displayErrorMessage = true
       } finally {
         this.setLoading(false)
       }
     },
 
-    handleFormReset() {
+    reset() {
       this.zScoreData = {}
     },
 

@@ -11,23 +11,23 @@ const getAxisLabelsForStandard = (standard) => {
 
   switch (standard) {
     case bmiForAge:
-      xAxisLabel = 'BMI'
-      yAxisLabel = 'Age [months]'
+      xAxisLabel = 'Age [months]'
+      yAxisLabel = 'BMI'
       break
 
     case lengthForAge:
-      xAxisLabel = 'Length / Height [cm]'
-      yAxisLabel = 'Age [months]'
+      xAxisLabel = 'Age [months]'
+      yAxisLabel = 'Length / Height [cm]'
       break
 
     case weightForAge:
-      xAxisLabel = 'Weight [kg]'
-      yAxisLabel = 'Age [months]'
+      xAxisLabel = 'Age [months]'
+      yAxisLabel = 'Weight [kg]'
       break
 
     case weightForLength:
-      xAxisLabel = 'Weight [kg]'
-      yAxisLabel = 'Length / Height [cm]'
+      xAxisLabel = 'Length / Height [cm]'
+      yAxisLabel = 'Weight [kg]'
       break
 
     default:

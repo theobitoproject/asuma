@@ -97,6 +97,14 @@ const getZScoreYPointByMatch = (zScore, labels, sd0) => {
   return sd0[match] + zScore.value
 }
 
+// TODO: is this really necessary?
+// it seems that for the "y" value we could use
+// the value entered in the form
+// example: a kid with weight=12kg and height=75cm
+// and for "weight for length" standard:
+// "x" value is 75
+// "y" value is 12
+// this analysis also applies for all standards
 const getZScoreYPoint = (zScore, labels, sd0) => {
   const point = getZScoreYPointByMatch(zScore, labels, sd0)
 
