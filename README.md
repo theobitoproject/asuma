@@ -1,29 +1,27 @@
-# senjuro
+# Senjuro
 
-## Project setup
-```
-npm install
-```
+Visualize growth for kids
 
-### Compiles and hot-reloads for development
-```
+**Senjuro** is the complement for **Rengoku** project. With **Senjuro** we can enter children data and being able to monitor growth for them.
+
+<img src="senjuro.jpg" alt="Senjuro's image" width="320"/>
+
+**Senjuro** is **Kiojuro Rengoku**'s brother.
+
+## Local development
+
+### Setup
+
+#### 1. Set environment variables
+
+Create a `.env.local` file in the root of the project. Copy all content from `env.example` into `.env.local`. No more changes should be needed
+
+**Note:** You can modify what you consider is necessary.
+
+#### 2. Run project
+
+From withing the container, run:
+
+```sh
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
