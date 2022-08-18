@@ -35,7 +35,9 @@
                 <ZScoreCharts
                   v-if="dataIsValid"
                   v-model="standard"
-                  :gender="child.gender"
+                  :age="zScoreData.age"
+                  :BMI="zScoreData.BMI"
+                  :child="child"
                   :zScore="zScoreForStandard"
                   :displayHandlers="false"
                 />
@@ -48,7 +50,9 @@
         <ZScoreCharts
           v-if="dataIsValid"
           v-model="standard"
-          :gender="child.gender"
+          :age="zScoreData.age"
+          :BMI="zScoreData.BMI"
+          :child="child"
           :zScore="zScoreForStandard"
           :displayHandlers="false"
         />
@@ -73,36 +77,28 @@
           v-if="displayChartsOnDialog"
           v-model="standard"
           :forMobile="true"
-          :gender="child.gender"
+          :age="zScoreData.age"
+          :BMI="zScoreData.BMI"
+          :child="child"
           :zScore="zScoreForStandard"
           @close="displayChartsOnDialog = false"
         />
       </v-card>
     </v-dialog>
-
-    <SnackBar
-      color="red lighten-1"
-      :show="displayErrorMessage"
-      :timeout="4000"
-      @close="displayErrorMessage = false"
-    >
-      <template v-slot:content> We're sorry. Something failed! </template>
-    </SnackBar>
   </v-container>
 </template>
 
 <script>
-import { getZScore } from '../api/zscore/getZScore'
+import { getZScore } from '../api/zscore'
 import { mapMutations } from 'vuex'
-import { standards } from '../api/zscore/constants'
-import { fetchObject, storeObject } from '../utils/local-storage'
+import { standards } from '../domain/standard'
+import { fetchObject, storeObject } from '../utils/localStorage'
 import AgeKPI from '../components/KPIs/AgeKPI.vue'
 import BMIKPI from '../components/KPIs/BMIKPI.vue'
 import ChildForm from '../components/ChildForm'
 import FloatingActionButtons from '../components/FloatingActionButtons.vue'
-import SnackBar from '../components/SnackBar.vue'
 import StandardSelect from '../components/StandardSelect.vue'
-import ZScoreCharts from '../components/ZScoreCharts.vue'
+import ZScoreCharts from '../components/ZScoreCharts/ZScoreCharts.vue'
 import ZScoreKPI from '../components/KPIs/ZScoreKPI.vue'
 
 const initialChildData = {
@@ -124,7 +120,6 @@ export default {
     BMIKPI,
     ChildForm,
     FloatingActionButtons,
-    SnackBar,
     StandardSelect,
     ZScoreCharts,
     ZScoreKPI,
@@ -167,13 +162,16 @@ export default {
     return {
       child,
       displayChartsOnDialog: false,
-      displayErrorMessage: false,
       standard: standards[3].value,
       zScoreData: {},
     }
   },
 
   methods: {
+    ...mapMutations('ErrorModule', [
+      'setDisplayError',
+      'setGenericErrorMessage',
+    ]),
     ...mapMutations('LoadingModule', ['setLoading']),
 
     displayCharts() {
@@ -188,7 +186,8 @@ export default {
         this.zScoreData = await getZScore(this.child)
       } catch (err) {
         console.error(err)
-        this.displayErrorMessage = true
+        this.setGenericErrorMessage()
+        this.setDisplayError(true)
       } finally {
         this.setLoading(false)
       }

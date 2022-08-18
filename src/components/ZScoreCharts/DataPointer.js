@@ -1,6 +1,5 @@
-import { weightForLength } from './constants'
-import { ENVARS, getEnvar } from '../../utils/enver'
-import { get } from '../../utils/request'
+import { weightForLength } from '../../domain/standard'
+import { getDataPoints } from '../../api/zscore'
 
 const getDataPointRangesKey = (standardName, gender) =>
   `${standardName}_${gender}`
@@ -17,12 +16,7 @@ export default class DataPointer {
       return this.getSingleDataPointRange(key, standardName, ageRange)
     }
 
-    const response = await get(
-      `${getEnvar(
-        ENVARS.API_URL
-      )}/api/zscore/standard/data-point-ranges?standardName=${standardName}&gender=${gender}`
-    )
-    const { dataPointRanges: rawDataPointRanges } = response.data.data
+    const rawDataPointRanges = await getDataPoints(standardName, gender)
 
     const dataPointRanges = rawDataPointRanges.map(
       ({ ageRange, dataPoints }) => {

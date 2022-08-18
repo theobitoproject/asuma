@@ -11,20 +11,11 @@
     <v-btn class="mt-4" fab @click="$emit('reset')">
       <v-icon>mdi-delete</v-icon>
     </v-btn>
-
-    <SnackBar
-      color="red lighten-1"
-      :show="displayRequiredMessage"
-      :timeout="4000"
-      @close="displayRequiredMessage = false"
-    >
-      <template v-slot:content> Compute Z Score first </template>
-    </SnackBar>
   </div>
 </template>
 
 <script>
-import SnackBar from './SnackBar.vue'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'FloatingActionButtons',
@@ -36,10 +27,6 @@ export default {
     },
   },
 
-  components: {
-    SnackBar,
-  },
-
   data() {
     return {
       displayRequiredMessage: false,
@@ -47,9 +34,12 @@ export default {
   },
 
   methods: {
+    ...mapMutations('ErrorModule', ['setDisplayError', 'setErrorMessage']),
+
     displayCharts() {
       if (this.disableDisplayCharts) {
-        this.displayRequiredMessage = true
+        this.setErrorMessage('Compute Z Score first')
+        this.setDisplayError(true)
         return
       }
       this.$emit('displayCharts')

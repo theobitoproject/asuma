@@ -31,11 +31,12 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { getDataSets } from '../api/zscore/getDataSets'
-import { getOptions, plugins } from '../api/zscore/configuration'
-import { getRandomString } from '../utils/strings'
-import ChartComp from './ChartComp.vue'
-import StandardSelect from './StandardSelect.vue'
+import { addZScoreDataset, getDataSets } from './getDataSets'
+import { getOptions } from './options'
+import { plugins } from './plugins'
+import { getRandomString } from '../../utils/strings'
+import ChartComp from '../ChartComp.vue'
+import StandardSelect from '../StandardSelect.vue'
 
 export default {
   name: 'ZScoreCharts',
@@ -45,8 +46,16 @@ export default {
   },
 
   props: {
-    gender: {
-      type: String,
+    age: {
+      type: Number,
+      default: 0,
+    },
+    BMI: {
+      type: Number,
+      default: 0,
+    },
+    child: {
+      type: Object,
       required: true,
     },
     displayHandlers: {
@@ -101,6 +110,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations('ErrorModule', [
+      'setDisplayError',
+      'setGenericErrorMessage',
+    ]),
     ...mapMutations('LoadingModule', ['setLoading']),
 
     async render() {
@@ -109,9 +122,17 @@ export default {
 
         const { labels, datasets } = await getDataSets(
           this.standard,
-          this.gender,
+          this.child.gender,
           this.zScore
         )
+        addZScoreDataset(
+          datasets,
+          this.standard,
+          this.child,
+          this.age,
+          this.BMI
+        )
+
         this.datasets = datasets
         this.labels = labels
 
@@ -130,6 +151,8 @@ export default {
         this.$refs.zScoreChart.render()
       } catch (err) {
         console.error(err)
+        this.setGenericErrorMessage()
+        this.setDisplayError(true)
       } finally {
         this.setLoading(false)
       }

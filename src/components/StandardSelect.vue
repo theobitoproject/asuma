@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { standards } from '../api/zscore/constants'
+import { standards } from '../domain/standard'
 
 export default {
   name: 'StandardSelect',
