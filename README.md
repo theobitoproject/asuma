@@ -2,7 +2,7 @@
 
 Visualize Z score to track children's growth.
 
-**Asuma** is the complement for [**Hiruzen**](https://github.com/theobitoproject/hiruzen) project
+**Asuma** is the complement for [Hiruzen](https://github.com/theobitoproject/hiruzen) project
 
 <img src="asuma.jpg" alt="Asuma's image" width="320"/>
 
@@ -28,3 +28,10 @@ From within the container, run:
 npm install
 npm run serve
 ```
+
+## Pending work
+
+- Add unit testing
+- Use **PWA** features so professionals can use the application without internet connection
+- Align with [**Hiruzen**](https://github.com/theobitoproject/hiruzen) so a CRUD can be added to track Z score in time
+  - The above feature might require authentication and authorization features.
