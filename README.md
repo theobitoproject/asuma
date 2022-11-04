@@ -1,12 +1,14 @@
-# Senjuro
+# Asuma
 
-Visualize growth for kids
+Visualize Z score to track children's growth.
 
-**Senjuro** is the complement for **Rengoku** project. With **Senjuro** we can enter children data and being able to monitor growth for them.
+**Asuma** is the complement for [**Hiruzen**](https://github.com/theobitoproject/hiruzen) project
 
-<img src="senjuro.jpg" alt="Senjuro's image" width="320"/>
+<img src="asuma.jpg" alt="Asuma's image" width="320"/>
 
-**Senjuro** is **Kiojuro Rengoku**'s brother.
+> The "King" are the unborn children who will grow up to take care of the leaf. One is still in Kurenai's womb... hers and my child. Take care of my "king"!"
+
+**Asuma Sarutobi**, former member of the Twelve Guardian Ninja and leader of Team 10.
 
 ## Local development
 
@@ -18,10 +20,11 @@ Create a `.env.local` file in the root of the project. Copy all content from `en
 
 **Note:** You can modify what you consider is necessary.
 
-#### 2. Run project
+#### 2. Install dependencies and run the project
 
-From withing the container, run:
+From within the container, run:
 
 ```sh
+npm install
 npm run serve
 ```
