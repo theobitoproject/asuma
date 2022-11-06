@@ -21,9 +21,9 @@
     <v-footer padless>
       <v-card class="flex primary lighten-1" flat tile>
         <v-card-text class="py-2 white--text text-center">
-          Made by
+          Created and maintain by
           <a class="white--text" :href="$options.contactUrl" target="_blank"
-            ><strong>Marlon</strong></a
+            ><strong>The Obito Project</strong></a
           >
           <v-icon right color="white"> mdi-arm-flex </v-icon>
         </v-card-text>
